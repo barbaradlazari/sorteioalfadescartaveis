@@ -22,7 +22,7 @@
         font-size: 0.9rem;
       }
       #numero-sorteado {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: bold;
         margin-top: 20px;
         color: #28a745;
@@ -38,17 +38,22 @@
   <body class="bg-light text-center d-flex flex-column justify-content-center align-items-center vh-100">
     <div class="container shadow p-5 rounded bg-white">
       <h1 class="mb-4">🎉 Sorteio Alfa Descartáveis</h1>
-      <p class="lead mb-4">Participe com apenas <strong>R$2</strong>, escaneando o QR Code abaixo ou clicando em "Copia e Cola".</p>
+      <p class="lead mb-4">Participe com apenas <strong>R$2</strong> escaneando o QR Code ou usando o código Pix abaixo:</p>
 
       <!-- QR Code -->
       <img src="seu-qrcode.png.jpg" alt="QR Code Pix" class="qr-code">
 
-      <!-- Botão de Copia e Cola -->
+      <!-- Botão de Copiar Código Pix -->
       <button onclick="copiarPix()" class="btn btn-outline-primary mb-4">
         📋 Copiar código Pix
       </button>
 
-      <!-- Botão de ver número -->
+      <!-- Campo para digitar o nome -->
+      <div class="mb-3">
+        <input type="text" id="nome-busca" class="form-control" placeholder="Digite o nome usado no Pix">
+      </div>
+
+      <!-- Botão para ver número -->
       <button id="ver-numero" class="btn btn-success btn-lg mb-3">Ver meu número</button>
 
       <div id="numero-sorteado"></div>
@@ -67,26 +72,35 @@
       }
 
       document.getElementById("ver-numero").addEventListener("click", function () {
+        const nomeDigitado = document.getElementById("nome-busca").value.trim().toLowerCase();
         const sheetId = "1hS-mi-FQV9WLidQI6GdNERLtWGUu9JK0BuOkYDikGmk";
-        const sheetNumber = "Página1"; // Aqui está a correção
-        const url = `https://opensheet.elk.sh/${sheetId}/${sheetNumber}`;
+        const aba = "Página1";
+        const url = `https://opensheet.elk.sh/${sheetId}/${aba}`;
     
+        if (!nomeDigitado) {
+          alert("Digite o nome que você usou no Pix.");
+          return;
+        }
+
         fetch(url)
           .then(response => response.json())
           .then(data => {
-            const ultimo = data[data.length - 1];
-            const numero = ultimo["Número"];
-            const nome = ultimo["Nome"];
-    
+            const entrada = data.find(linha => linha["Nome"] && linha["Nome"].toLowerCase().includes(nomeDigitado));
+
             const resultado = document.getElementById("numero-sorteado");
-            resultado.innerHTML = `🎟️ Último número sorteado: <strong>${numero}</strong><br> Nome: ${nome}`;
-    
-            // Aguarda 5 segundos e redireciona para o WhatsApp com a mensagem pronta
-            setTimeout(() => {
-              const mensagem = encodeURIComponent(`Insira seu Número da Sorte exibido na tela anterior`);
-              const linkWhatsApp = `https://wa.me/551148921286?text=${mensagem}`;
-              window.location.href = linkWhatsApp;
-            }, 5000);
+
+            if (entrada) {
+              resultado.innerHTML = `🎟️ Seu número da sorte é: <strong>${entrada["Número"]}</strong><br> Nome: ${entrada["Nome"]}`;
+
+              // Redireciona para o WhatsApp após 5 segundos
+              setTimeout(() => {
+                const mensagem = encodeURIComponent(`Meu número da sorte: ${entrada["Número"]} (nome: ${entrada["Nome"]})`);
+                const linkWhatsApp = `https://wa.me/551148921286?text=${mensagem}`;
+                window.location.href = linkWhatsApp;
+              }, 5000);
+            } else {
+              resultado.innerHTML = `❌ Nome não encontrado. Verifique se escreveu exatamente como no Pix.`;
+            }
           })
           .catch(err => {
             console.error("Erro ao buscar dados:", err);
