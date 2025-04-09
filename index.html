@@ -43,13 +43,22 @@
     <div class="container shadow p-5 rounded bg-white">
       <h2 class="mb-4">🎉 Pagando o valor de uma unidade você concorre a uma caixa!</h1>
       
-      <!-- Imagem do prêmio -->
-      <img src="leite-condensado.jpg" class="premio img-fluid">
+     <div class="row justify-content-center align-items-center mb-4">
+  <!-- Imagem do leite condensado -->
+  <div class="col-md-6 mb-3 mb-md-0">
+    <img src="leite-condensado.jpg" alt="Leite Condensado Italac" class="img-fluid rounded shadow">
+  </div>
 
-      <p class="lead mb-4">Participe com apenas <strong>R$6,50</strong> escaneando o QR Code ou usando o código Pix abaixo:</p>
+  <!-- QR Code -->
+  <div class="col-md-6">
+    <p class="lead">Participe com apenas <strong>R$6,50</strong> escaneando o QR Code ou usando o código Pix abaixo:</p>
+    <img src="seu-qrcode.png.jpg" alt="QR Code Pix" class="img-fluid rounded shadow mb-3">
+    <button onclick="copiarPix()" class="btn btn-outline-primary">
+      📋 Copiar código Pix
+    </button>
+  </div>
+</div>
 
-      <!-- QR Code -->
-      <img src="seu-qrcode.png.jpg" alt="QR Code Pix" class="qr-code">
 
       <!-- Botão de Copiar Código Pix -->
       <button onclick="copiarPix()" class="btn btn-outline-primary mb-4">
