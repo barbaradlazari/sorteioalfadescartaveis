@@ -27,6 +27,11 @@
         margin-top: 20px;
         color: #28a745;
       }
+      .qr-code {
+        max-width: 180px;
+        margin: 0 auto 20px;
+        display: block;
+      }
     </style>
   </head>
 
@@ -35,11 +40,13 @@
       <h1 class="mb-4">🎉 Sorteio Alfa Descartáveis</h1>
       <p class="lead mb-4">Participe com apenas <strong>R$2</strong>, escaneando o QR Code abaixo!</p>
 
-  <img src="seu-qrcode.png.jpg" alt="QR Code Pix">
-      <!--link de pagamento-->
+      <img src="seu-qrcode.png.jpg" alt="QR Code Pix" class="qr-code">
+
+      <!-- Link de pagamento -->
       <a href="https://picpay.me/barbara.lazari3/2.00" target="_blank" class="btn btn-outline-primary mb-4">
         💳 Pagar com PicPay
       </a>
+
       <button id="ver-numero" class="btn btn-success btn-lg mb-3">Ver meu número</button>
 
       <div id="numero-sorteado"></div>
@@ -78,7 +85,6 @@
           });
       });
     </script>
-    
     
   </body>
 </html>
