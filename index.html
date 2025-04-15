@@ -51,12 +51,7 @@
       📋 Copiar código Pix
     </button>
 
-    <!-- Campo para digitar o nome -->
-    <div class="mb-3">
-      <input type="text" id="nome-busca" class="form-control" placeholder="Digite o nome usado no Pix">
-    </div>
-
-    <!-- Botão para ver número -->
+    <!-- Botão para confirmar pagamento -->
     <button id="ver-numero" class="btn btn-success btn-lg mb-3">Confirmar pagamento</button>
 
     <!-- Resultado -->
@@ -77,22 +72,9 @@
     }
 
     document.getElementById("ver-numero").addEventListener("click", function () {
-      const nome = document.getElementById("nome-busca").value.trim();
       const resultado = document.getElementById("numero-sorteado");
 
-      if (nome === "") {
-        resultado.innerHTML = `<span style="color: red;">⚠️ Por favor, digite o nome usado no Pix.</span>`;
-        return;
-      }
-
-      resultado.innerHTML = `✅ Pagamento recebido! Seu número da sorte será enviado em breve pelo WhatsApp.`;
-
-      // Redireciona para o WhatsApp após alguns segundos (opcional)
-      setTimeout(() => {
-        const mensagem = encodeURIComponent(`Oi! Paguei o Pix com o nome: ${nome}. Quero meu número da sorte!`);
-        const linkWhatsApp = `https://wa.me/551148921286?text=${mensagem}`;
-        window.location.href = linkWhatsApp;
-      }, 5000);
+      resultado.innerHTML = `✅ Pagamento recebido! Seu número da sorte será enviado em breve por <strong>e-mail</strong>.`;
     });
   </script>
 </body>
