@@ -21,3 +21,79 @@
     footer small {
       font-size: 0.9rem;
     }
+    #numero-sorteado {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #28a745;
+    }
+    .qr-code {
+      max-width: 200px;
+      width: 100%;
+      margin: 0 auto 20px;
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="bg-light text-center d-flex flex-column justify-content-center align-items-center py-4">
+  <div class="container shadow p-4 rounded bg-white">
+    <h2 class="mb-4">🎉 Já pensou em ganhar uma caixa de Leite Condensado ao valor de uma unidade? Aqui na Alfa isso é possível!</h2>
+    <h2 class="mb-4">Pagando o valor de uma unidade você concorre a uma caixa!</h2>
+
+    <p class="lead">Participe com apenas <strong>R$6,50</strong> escaneando o QR Code ou usando o código Pix abaixo:</p>
+     
+    <!-- QR Code -->
+    <img src="seu-qrcode.png.jpg" alt="QR Code Pix" class="qr-code rounded shadow mb-3">
+
+    <!-- Botão de Copiar Código Pix -->
+    <button onclick="copiarPix()" class="btn btn-outline-primary mb-4">
+      📋 Copiar código Pix
+    </button>
+
+    <!-- Campo para digitar o nome -->
+    <div class="mb-3">
+      <input type="text" id="nome-busca" class="form-control" placeholder="Digite o nome usado no Pix">
+    </div>
+
+    <!-- Botão para ver número -->
+    <button id="ver-numero" class="btn btn-success btn-lg mb-3">Confirmar pagamento</button>
+
+    <!-- Resultado -->
+    <div id="numero-sorteado"></div>
+
+    <!-- Rodapé -->
+    <footer class="mt-3 text-muted">
+      <small><strong>Boa sorte!</strong> ❤️</small>
+    </footer>
+  </div>
+
+  <script>
+    function copiarPix() {
+      const codigoPix = "00020126580014br.gov.bcb.pix01367f9df6d4-95f6-47bd-b51b-4f411220982b52040000530398654046.505802BR5920Leandro Franco Bueno6008Brasilia62230519daqr16830197742656163040A64";
+      navigator.clipboard.writeText(codigoPix)
+        .then(() => alert("Código Pix copiado! Agora cole no app do seu banco."))
+        .catch(err => alert("Erro ao copiar o código."));
+    }
+
+    document.getElementById("ver-numero").addEventListener("click", function () {
+      const nome = document.getElementById("nome-busca").value.trim();
+      const resultado = document.getElementById("numero-sorteado");
+
+      if (nome === "") {
+        resultado.innerHTML = `<span style="color: red;">⚠️ Por favor, digite o nome usado no Pix.</span>`;
+        return;
+      }
+
+      resultado.innerHTML = `✅ Pagamento recebido! Seu número da sorte será enviado em breve pelo WhatsApp.`;
+
+      // Redireciona para o WhatsApp após alguns segundos (opcional)
+      setTimeout(() => {
+        const mensagem = encodeURIComponent(`Oi! Paguei o Pix com o nome: ${nome}. Quero meu número da sorte!`);
+        const linkWhatsApp = `https://wa.me/551148921286?text=${mensagem}`;
+        window.location.href = linkWhatsApp;
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
